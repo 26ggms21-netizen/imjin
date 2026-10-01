@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>1592: 나는 왜 이 전쟁에 서 있었을까?</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#f6f1e7;--card:#fffdf8;--ink:#2a2118;--sub:#6b5d4d;--line:#dccfb8;--acc:#b3402a;--acc2:#2f5d62;--ok:#2e7d4f;--no:#b3402a}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1814;--card:#262019;--ink:#f1e8d8;--sub:#b9ab96;--line:#40372b;--acc:#e0694f;--acc2:#6fb3b8;--ok:#5cc08a;--no:#e0694f}}
+:root[data-theme="dark"]{--bg:#1c1814;--card:#262019;--ink:#f1e8d8;--sub:#b9ab96;--line:#40372b;--acc:#e0694f;--acc2:#6fb3b8;--ok:#5cc08a;--no:#e0694f}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Serif KR","Apple SD Gothic Neo","Malgun Gothic",serif;line-height:1.7}
+main{max-width:760px;margin:0 auto;padding:18px 16px 60px}
+h1{font-size:1.9rem;line-height:1.3;margin:.2em 0}h2{margin:.2em 0;font-size:1.3rem}
+.tag{color:var(--acc);font-weight:700;font-size:.85rem;letter-spacing:.05em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:12px 0}
+.sub{color:var(--sub);font-size:.93rem}
+button{font:inherit;cursor:pointer;color:var(--ink)}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:11px 20px;font-weight:700}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.char{text-align:left;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:14px}
+.char:hover{border-color:var(--acc)}.char .e{font-size:2.2rem}.char b{display:block;font-size:1.1rem}
+.char .done{color:var(--ok);font-size:.8rem;font-weight:700}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:8px 0}
+.opt:hover:not(:disabled){border-color:var(--acc)}.opt:disabled{opacity:.55;cursor:default}.opt.pick{opacity:1;border:2px solid var(--acc2)}
+.bars{display:grid;gap:6px;margin:10px 0}
+.bar{display:grid;grid-template-columns:96px 1fr 34px;align-items:center;gap:8px;font-size:.85rem}
+.bar i{display:block;height:10px;border-radius:6px;background:var(--line);overflow:hidden}
+.bar i u{display:block;height:100%;background:var(--acc2);transition:width .5s}
+.fb{border-left:4px solid var(--acc2);padding:8px 12px;margin:10px 0;background:var(--card);border-radius:0 10px 10px 0}
+.fb .d{font-weight:700;color:var(--acc2)}
+.fact{font-size:.9rem;color:var(--sub)}
+textarea{width:100%;min-height:80px;font:inherit;background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px}
+table{width:100%;border-collapse:collapse;font-size:.9rem}td,th{border:1px solid var(--line);padding:6px 8px;vertical-align:top}th{background:var(--card)}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.wrap{overflow-x:auto}
+.pt{display:block;margin:auto}.sw{width:34px;height:34px;border-radius:50%;border:3px solid var(--line);margin:3px;cursor:pointer}.dp{display:grid;grid-template-columns:repeat(3,56px);gap:6px;justify-content:center;margin:10px 0}.dp button{height:48px;font-size:1.3rem;border-radius:10px;border:1px solid var(--line);background:var(--card);touch-action:none}input.nm{font:inherit;padding:8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+</style></head><body><main id="app"></main>
+<script>
+const CH=[
+{id:"yi",e:"⚓",n:"이순신",r:"조선 수군 장수",d:"바다에서 일본군의 보급로를 끊어라",
+ sc:[
+ {t:"1592년 5월 · 전라좌수영",x:"일본군이 부산에 상륙한 지 한 달, 한양과 평양이 연달아 무너지고 선조는 의주로 피난했습니다. 육지에서는 연패 소식뿐입니다. 수군을 이끄는 당신은 어떻게 하시겠습니까?",
+  o:[["전라좌수영을 굳게 지키며 상황을 지켜본다",[0,-5,-5],"소극적인 대응은 일본 수군이 바다를 장악하게 두는 결과가 됩니다. 바다에서 막지 못하면 곡창 지대 전라도가 위험해집니다."],
+     ["판옥선과 대포를 점검하고 적극 출전해 일본 수군을 찾아 친다",[5,10,10],"옳은 판단입니다. 판옥선은 방향 전환이 뛰어나고 대포를 많이 실을 수 있어 일본군의 조총·접근전에 강했습니다."],
+     ["수군을 이끌고 육지로 올라가 한양 탈환에 힘을 보탠다",[-5,-5,0],"수군의 강점은 바다에 있습니다. 배를 떠나면 장점을 잃고, 일본군의 해상 보급은 오히려 자유로워집니다."]]},
+ {t:"1592년 7월 · 한산도 앞바다",x:"일본 수군이 좁은 견내량에 모여 있습니다. 좁은 곳에서는 판옥선이 방향을 틀기 어렵습니다. 어떤 전술을 쓰시겠습니까?",
+  o:[["좁은 포구로 곧장 돌격한다",[-10,-10,-5],"좁은 곳은 일본군의 접근전에 유리합니다. 우리 배의 장점을 살릴 수 없습니다."],
+     ["일부 배로 유인해 넓은 바다로 끌어낸 뒤 대포로 에워싸 공격한다",[10,15,10],"한산도 대첩(1592.10 교과서 지도 표기)처럼 판옥선의 기동력과 대포를 살리는 전술이 승리를 만듭니다."],
+     ["밤을 기다려 무작정 야간 기습한다",[0,-5,0],"지형과 배의 장점을 고려하지 않은 기습은 위험합니다."]]},
+ {t:"1592~93년 · 바다와 육지의 연결",x:"이순신의 수군과 육지의 김시민·권율, 의병 활약으로 일본군은 서해를 따라 북상하기 어려워졌습니다. 이 승리의 가장 큰 의미는 무엇일까요?",
+  o:[["일본군 보급로를 끊고 곡창 지대 전라도를 지켜 장기전의 발판이 되었다",[5,10,15],"정확합니다. 육로와 해로로 진격하려던 일본의 작전이 막혔고, 이후 명 지원군이 평양성을 되찾을 수 있었습니다."],
+     ["일본이 즉시 항복하게 되었다",[0,-5,-10],"전쟁은 이후에도 길게 이어졌습니다."],
+     ["조선은 명의 도움이 전혀 필요 없게 되었다",[-5,-5,-10],"조·명 연합군의 평양성 탈환 등 명의 지원은 전쟁에 중요한 역할을 했습니다."]]},
+ {t:"1597년 9월 · 명량",x:"휴전 회담이 결렬되고 일본이 다시 침입했습니다(정유재란). 남은 전선은 매우 적습니다. 명량 앞바다 물살이 센 좁은 길목에서 어떻게 맞서시겠습니까?",
+  o:[["수군을 해산하고 육군에 합류하라는 압박을 따른다",[-10,-15,-5],"바다를 내주면 일본은 서해로 곧바로 올라올 수 있습니다."],
+     ["강한 물살과 좁은 지형을 이용해 적은 배로 맞서 싸운다",[10,15,15],"명량 해전(1597.9)은 지형을 활용한 대표적 승리였고, 일본의 재침략 기세를 꺾었습니다."],
+     ["일본과 따로 강화를 맺는다",[-10,-10,-10],"일본이 요구한 강화 조건(4도 할양 등)은 매우 무리한 것이었습니다."]]}]},
+{id:"fm",e:"🌾",n:"조선 농부",r:"전쟁에 휩쓸린 백성",d:"땅과 가족을 지키며 전쟁을 겪는다",
+ sc:[
+ {t:"1592년 4월 · 마을",x:"“적선이 바다를 덮고 몰려왔다”는 소문이 퍼졌습니다. 나라는 오랜 평화로 방비가 약했고 선조는 의주로 떠났다고 합니다. 당신은?",
+  o:[["식구를 데리고 산속으로 피난한다",[5,-5,0],"목숨을 지키는 것도 중요하지만, 백성이 흩어지면 농사와 나라의 방어가 모두 어려워집니다."],
+     ["마을 사람들과 의병에 참여해 지형을 이용해 싸운다",[0,10,10],"관군을 대신해 지역을 지킨 것은 의병이었습니다. 전직 관리, 유학자, 농민, 승려가 함께했습니다."],
+     ["관아의 지시만 기다린다",[-10,-10,-5],"관아도 소문만 듣고 놀라 무너진 고을이 많았습니다."]]},
+ {t:"1593년 · 명군 도착",x:"명 지원군이 평양을 되찾았지만, 군량이 모자라 마을에서 곡식과 짐꾼을 요구합니다. “일본군은 얼레빗, 명군은 참빗”이라는 말이 돕니다.",
+  o:[["곡식을 몰래 숨긴다",[0,-5,0],"숨기면 당장은 낫지만 갈등이 커집니다. 명군의 민폐 문제는 개인이 아니라 나라 차원의 협상이 필요했습니다."],
+     ["일단 응하되, 피해를 관아와 의병장에게 알려 조정에 전달되게 한다",[5,10,10],"조선에 무리한 부담이 갔던 이 문제는 명의 지원이 동맹이자 부담이기도 했음을 보여줍니다."],
+     ["마을을 떠나 떠돌이가 된다",[-10,-10,-5],"유랑민이 늘면서 굶주림과 전염병이 퍼졌습니다."]]},
+ {t:"1594~96년 · 휴전 회담 중",x:"일본과 명이 휴전을 이야기하는 동안에도 마을은 약탈에 시달립니다. 전쟁으로 농사를 못 지어 밭이 크게 줄었습니다(경지 170.8만 결 → 54.2만 결). 어떻게 살아가시겠습니까?",
+  o:[["위험하지만 남은 땅을 다시 일군다",[5,5,5],"농사 재개가 나라 재정 회복의 출발이었습니다. 세금이 걷히지 않아 국가 재정은 어려웠습니다."],
+     ["일본군에게 협력해 안전을 얻는다",[-5,-15,-10],"일본군의 약탈과 요구는 무리했고, 협력해도 안전은 보장되지 않았습니다."],
+     ["땅을 버리고 도시로 간다",[-5,-5,0],"도시도 전쟁의 피해에서 자유롭지 못했습니다."]]},
+ {t:"1598년 이후 · 전쟁이 끝나고",x:"7년 전쟁이 끝났습니다. 공을 세운 백성은 신분이 오르고 노비들은 문서를 불태우기도 합니다. 당신의 선택은?",
+  o:[["전투에서 세운 공을 인정받아 신분 상승을 노린다",[5,5,10],"신분 질서에 변화가 시작된 것은 전쟁이 남긴 중요한 변화입니다."],
+     ["일본에 끌려간 가족의 소식을 찾아 나선다",[5,10,5],"많은 포로가 일본에 끌려갔고, 자력 귀환은 어려웠습니다. 에도 막부의 국교 요청 때 포로 송환이 조건이 되었습니다."],
+     ["아무것도 변하지 않았다고 생각하고 이전처럼 산다",[0,-5,-10],"전쟁은 조선의 사회·경제·문화 전반에 큰 변화를 남겼습니다."]]}]},
+{id:"yj",e:"🐉",n:"이여송",r:"명나라 장수",d:"조선을 돕는 일이 곧 명을 지키는 길일까?",
+ sc:[
+ {t:"1592년 · 북경",x:"명은 개혁의 실패로 혼란스럽고, 북쪽에서는 여진족이 세력을 키우고 있습니다. 조선이 지원군을 요청했습니다. 어떻게 하시겠습니까?",
+  o:[["거절하고 국경 방어에만 집중한다",[-5,-5,-5],"일본이 명을 공격하기 위해 길을 빌려달라고 한 것이 침략의 명분이었습니다. 조선이 무너지면 명도 위험해집니다."],
+     ["파병을 결정하되 규모와 비용을 계산한다",[5,10,15],"조선과 명 모두 전쟁이 끝난 뒤 큰 부담을 졌습니다. 무리한 파병이 명의 국력을 약화시켰음을 기억해야 합니다."],
+     ["가능한 모든 군대를 보내 한 번에 끝낸다",[-5,5,0],"무리하게 지원군을 보내 국력이 약해졌고 여진이 이 틈을 노렸습니다."]]},
+ {t:"1593년 1월 · 평양성",x:"압록강을 건너 평양성 앞에 섰습니다. 조선군과 의병이 함께합니다. 공격 방식은?",
+  o:[["조선군과 연합해 대포를 앞세워 공격한다",[10,15,10],"평양성 탈환은 조·명 연합군의 대표적 승리였고 일본군의 북진을 꺾었습니다."],
+     ["조선군은 제외하고 명군 단독으로 싸운다",[-5,-5,-5],"지형과 정보를 아는 조선군과의 협력이 중요했습니다."],
+     ["싸우지 않고 일본과 협상부터 한다",[-5,-5,0],"평양성 탈환으로 협상력이 높아졌습니다."]]},
+ {t:"1593~96년 · 강화 교섭",x:"전세가 불리해진 일본이 휴전을 제안했습니다. 일본은 명 황제의 공주를 일본 천황의 아내로 달라, 조선의 4도를 달라는 등 무리한 요구를 했습니다.",
+  o:[["요구가 무리함을 알고 단호히 거절한다",[5,10,15],"일본의 요구는 명과 조선 모두에게 받아들일 수 없는 것이었고, 결국 3년간의 휴전 회담은 결렬됐습니다."],
+     ["조선 땅 일부를 내주고 전쟁을 끝낸다",[-10,-15,-5],"조선의 땅을 두고 조선 없이 흥정한다면 동맹의 신뢰가 무너집니다."],
+     ["조선은 모르게 일본과 비밀 협상을 한다",[-10,-10,-10],"조선에 대한 신의를 잃게 됩니다."]]},
+ {t:"1597~98년 · 정유재란",x:"일본이 다시 침입했습니다. 명군의 식량 부족 때문에 조선 관아와 민가를 약탈한다는 보고가 올라옵니다. 어떻게 하시겠습니까?",
+  o:[["군사 규율을 세워 약탈을 금하고 보급을 정비한다",[10,10,10],"명군의 민폐는 조선 백성에게 큰 고통이었습니다. 규율은 연합 유지의 열쇠였습니다."],
+     ["현지에서 알아서 조달하게 둔다",[-15,-5,-5],"“명군은 참빗”이라는 원망이 커집니다."],
+     ["조선 조정에 부담을 더 요구한다",[-10,-5,-5],"조선의 재정과 백성 생활이 더 어려워졌습니다."]]}]},
+{id:"kc",e:"🕊️",n:"김충선",r:"일본군 장수 → 조선 귀화",d:"명분 없는 전쟁 앞에서 내린 결단",
+ sc:[
+ {t:"1592년 · 부산",x:"당신은 일본군 장수 사야가입니다. 일본은 “명을 치러 가니 길을 빌려 달라”며 조선을 침략했습니다. 조선 백성은 아무 잘못이 없는데… 마음이 흔들립니다.",
+  o:[["명령대로 끝까지 싸운다",[-10,-10,-5],"이 전쟁은 도요토미 히데요시가 국내 불만을 잠재우고 통합을 강화하려는 면이 있었습니다."],
+     ["전쟁의 명분을 비판하며 부하 3,000명과 함께 조선에 귀순한다",[5,10,15],"실제로 사야가는 전쟁을 비판하며 조선에 귀화한 항왜(降倭)였습니다."],
+     ["혼자 몰래 도망친다",[-5,-5,0],"부하와 함께 책임 있는 선택을 하는 것이 더 큰 영향을 줍니다."]]},
+ {t:"1592~93년 · 조선군 진영",x:"조선군은 일본의 조총 때문에 고전했습니다. 일본은 포르투갈과 교류하며 얻은 조총을 앞세웠습니다. 당신이 가진 지식으로 무엇을 하시겠습니까?",
+  o:[["조총 제작·사용 기술을 조선군에 전한다",[10,15,10],"김충선은 조총 기술을 전하고 여러 전투에서 활약했습니다. 조선은 훈련도감 설치 등 군사력을 보충했습니다."],
+     ["기술을 숨기고 눈치를 본다",[-5,-5,-5],"신뢰를 얻기 어렵습니다."],
+     ["일본군에게 조선 정보를 알려 준다",[-15,-15,-10],"귀순의 뜻과 어긋납니다."]]},
+ {t:"1597년 이후 · 전투",x:"일본의 재침략에 맞서 조선군과 함께 전선에 섭니다. 일본군 병사들이 포로로 잡혔습니다. 어떻게 하시겠습니까?",
+  o:[["전투에 참여해 공을 세우고 조선의 질서를 따른다",[5,10,10],"항왜는 조선군과 함께 전투를 치르며 조선에 정착해 갔습니다."],
+     ["전투를 피하고 마을에 숨는다",[-5,-5,-5],"그러면 귀순의 뜻을 의심받습니다."],
+     ["일본군 쪽으로 돌아간다",[-10,-10,-5],"일본에서는 배신자로 처벌받을 수 있습니다."]]},
+ {t:"1598년 이후 · 전쟁이 끝나고",x:"7년 전쟁은 끝났습니다. 조선은 ‘김충선’이라는 이름을 내렸습니다. 에도 막부가 세워지자 조선과 일본은 국교를 다시 맺으려 합니다. 당신의 마음은?",
+  o:[["조선에 정착해 새 삶을 일구고, 전쟁의 부당함을 증언한다",[10,10,15],"“명분 없는 전쟁”이라는 김충선의 생각은 전쟁을 바라보는 다른 시각을 보여 줍니다."],
+     ["일본으로 돌아가 영웅이 되려 한다",[-5,-10,-5],"귀화를 선택한 이상 돌아갈 곳이 없었습니다."],
+     ["두 나라 모두에서 숨어 지낸다",[-5,-5,-5],"기록을 남기는 일이 역사에 더 큰 의미가 있습니다."]]}]}
+];
+const ST=["백성의 삶","나라의 힘","국제정세 통찰"];
+const TH=[["조선","7년간 인구 감소, 경지 170.8→54.2만 결, 문화유산 소실, 신분 질서 변화, 성리학·도자기 산업 발전"],["명","무리한 파병으로 국력 약화 → 여진족의 후금 건국"],["일본","도요토미 정권 붕괴, 에도 막부 성립, 도공의 영향 아리타 도자기 발전"]];
+let S=load();
+function load(){try{return JSON.parse(localStorage.getItem("imjin")||"{}")}catch(e){return{}}}
+function save(){try{localStorage.setItem("imjin",JSON.stringify(S))}catch(e){}}
+const A=document.getElementById("app");
+function home(){cancelAnimationFrame(raf);setTimeout(paintAll,0);
+ S.done=S.done||{};
+ A.innerHTML=`<div class="tag">1592 — 1598 · 동아시아 7년 전쟁</div><h1>나는 왜 이 전쟁에 서 있었을까?</h1>
+ <p class="sub">같은 임진왜란도 서 있는 자리에 따라 다르게 보입니다. 캐릭터를 만들고 메타버스 속 조선을 직접 걸어 다니며 선택하고, 조선·명·일본의 입장에서 전쟁이 동아시아에 남긴 것을 분석해 봅시다.</p>
+ <div class="grid">${CH.map(c=>`<button class="char" onclick="start('${c.id}')"><canvas class="pt" data-id="${c.id}" width="130" height="130" style="width:120px"></canvas><b>${c.n}</b><span class="sub">${c.r}</span><br><span class="fact">${c.d}</span>${S.done[c.id]?`<br><span class="done">✔ 완료 (${S.done[c.id]}점)</span>`:""}</button>`).join("")}</div>
+ ${Object.keys(S.done).length>=4?`<div class="card"><b>🎉 4명의 시각을 모두 체험했어요!</b><br><button class="btn" onclick="finale()">종합 탐구 하기</button></div>`:""}
+ <p class="sub">진행 상황은 이 기기의 브라우저에 저장됩니다. <button class="btn ghost" onclick="S={};save();home()">초기화</button></p>`;
+}
+let cur,i,v,locked;
+const PAL={yi:["#e8c39e","#2f4a8a"],fm:["#d9ae86","#c9b98a"],yj:["#e3b995","#b3402a"],kc:["#e8c39e","#3d3d3d"]};
+const SW=["#2f4a8a","#b3402a","#2f5d62","#6b3fa0","#3d3d3d","#c9b98a"];
+const LN={yi:"바다를 내주면 곡창 전라도도 위험하오.",fm:"관군 대신 의병으로 마을을 지켰소!",yj:"조선이 무너지면 명도 위험하오. 압록강을 건넜소.",kc:"명분 없는 전쟁이라 생각해 조선에 귀순했소."};
+const SP=[[110,300],[300,110],[540,150],[580,330]],EM=["🏯","⛵","🏘️","🏛️"],NP=[[200,230],[430,250],[330,340]];
+let me={n:"",rb:null},raf,K={},W={};
+function av(c,x,y,s,id,rb){c.save();c.translate(x,y);c.scale(s,s);
+c.fillStyle="rgba(0,0,0,.2)";c.beginPath();c.ellipse(0,28,18,6,0,0,7);c.fill();
+c.strokeStyle="#5a4630";c.lineWidth=3;c.beginPath();if(id=="kc"){c.moveTo(-22,24);c.lineTo(24,-6)}else{c.moveTo(20,26);c.lineTo(26,-24)}c.stroke();
+if(id=="yi"){c.fillStyle="#cfd4da";c.fillRect(24,-34,4,14)}
+if(id=="fm"){c.fillStyle="#777";c.fillRect(20,-26,14,5)}
+if(id=="yj"){c.fillStyle="#c0392b";c.fillRect(27,-34,18,12)}
+c.fillStyle=rb||PAL[id][1];c.beginPath();c.roundRect(-14,-4,28,32,8);c.fill();
+c.fillStyle=id=="kc"?"#b3402a":"#d4a72c";c.fillRect(-14,8,28,5);
+c.fillStyle=PAL[id][0];c.beginPath();c.arc(0,-14,13,0,7);c.fill();
+c.fillStyle="#222";c.fillRect(-6,-15,3,3);c.fillRect(3,-15,3,3);c.fillRect(-3,-7,6,1.5);
+if(id=="yi"){c.fillStyle="#1d1d1d";c.beginPath();c.ellipse(0,-24,17,5,0,0,7);c.fill();c.fillRect(-9,-38,18,14);c.fillStyle="#c0392b";c.fillRect(-1.5,-46,3,9)}
+if(id=="fm"){c.fillStyle="#d8bf6a";c.beginPath();c.moveTo(-26,-20);c.lineTo(0,-44);c.lineTo(26,-20);c.fill()}
+if(id=="yj"){c.fillStyle="#d4a72c";c.beginPath();c.arc(0,-18,14,Math.PI,0);c.fill();c.fillRect(-15,-19,30,3);c.fillStyle="#c0392b";c.fillRect(-1.5,-38,3,9)}
+if(id=="kc"){c.fillStyle="#111";c.beginPath();c.ellipse(0,-24,21,5,0,0,7);c.fill();c.fillRect(-8,-38,16,14)}
+c.restore()}
+function paintAll(){document.querySelectorAll("canvas.pt").forEach(k=>{const c=k.getContext("2d"),id=k.dataset.id;c.clearRect(0,0,130,130);av(c,60,76,1.4,id,cur&&cur.id==id?me.rb:null)})}
+function label(c,s,x,y){c.font="bold 13px sans-serif";c.lineWidth=3;c.strokeStyle="#222";c.fillStyle="#fff";c.textAlign="center";c.strokeText(s,x,y);c.fillText(s,x,y)}
+function start(id){cur=CH.find(c=>c.id==id);me.rb=PAL[id][1];me.n=cur.n;
+A.innerHTML=`<div class="top"><button class="btn ghost" onclick="home()">← 뒤로</button></div><div class="tag">캐릭터 생성</div><h2>${cur.e} ${cur.n} <span class="sub">${cur.r}</span></h2><div class="card" style="text-align:center"><canvas class="pt" data-id="${id}" width="130" height="130" style="width:200px"></canvas><p class="fact">${cur.d}</p><p>이름 <input class="nm" value="${cur.n}" maxlength="8" oninput="me.n=this.value"></p><div>옷 색깔 ${SW.map(x=>`<button class="sw" style="background:${x}" onclick="me.rb='${x}';paintAll()"></button>`).join("")}</div></div><button class="btn" onclick="enter()">🌏 메타버스 입장</button>`;
+setTimeout(paintAll,0)}
+function enter(){i=0;v=[50,50,50];W={x:380,y:380,tg:null,near:-2};world()}
+addEventListener("keydown",e=>{K[e.key]=1;W.tg=null;if(e.key.startsWith("Arrow")&&document.getElementById("cv"))e.preventDefault()});
+addEventListener("keyup",e=>K[e.key]=0);
+function world(){const s=cur.sc[i];
+A.innerHTML=`<div class="top"><button class="btn ghost" onclick="home()">← 처음</button><span class="sub">${me.n||cur.n} · 장소 ${i+1}/${cur.sc.length}</span></div>${bars()}<canvas id="cv" width="720" height="420" style="width:100%;border-radius:14px;border:1px solid var(--line);touch-action:none"></canvas><p class="sub">방향키·WASD 또는 화면 터치로 이동 · ⭐가 떠 있는 장소(${s.t.split(" · ")[1]||s.t})로 가세요. 다른 인물에게 다가가 말도 걸어 보세요.</p><div id="go" style="min-height:48px"></div><div class="dp"><span></span><button data-k="ArrowUp">▲</button><span></span><button data-k="ArrowLeft">◀</button><button data-k="ArrowDown">▼</button><button data-k="ArrowRight">▶</button></div>`;
+const cv=document.getElementById("cv");
+cv.onpointerdown=e=>{const r=cv.getBoundingClientRect();W.tg={x:(e.clientX-r.left)*720/r.width,y:(e.clientY-r.top)*420/r.height}};
+document.querySelectorAll(".dp button").forEach(b=>{const k=b.dataset.k;b.onpointerdown=()=>{K[k]=1;W.tg=null};b.onpointerup=b.onpointerleave=()=>K[k]=0});
+W.near=-2;cancelAnimationFrame(raf);loop()}
+function loop(){const cv=document.getElementById("cv");if(!cv)return;
+const c=cv.getContext("2d"),t=Date.now()/400;
+let dx=(K.ArrowRight||K.d||K.D?1:0)-(K.ArrowLeft||K.a||K.A?1:0),dy=(K.ArrowDown||K.s||K.S?1:0)-(K.ArrowUp||K.w||K.W?1:0);
+if(W.tg){const a=W.tg.x-W.x,b=W.tg.y-W.y,d=Math.hypot(a,b);if(d<5)W.tg=null;else{dx=a/d;dy=b/d}}
+const n=Math.hypot(dx,dy)||1,nx=W.x+dx/n*3,ny=W.y+dy/n*3;
+if((dx||dy)&&((nx-380)/330)**2+((ny-230)/170)**2<1){W.x=nx;W.y=ny}
+c.fillStyle="#5aa0c8";c.fillRect(0,0,720,420);
+c.fillStyle="#8fb36b";c.beginPath();c.ellipse(380,230,330,170,0,0,7);c.fill();
+c.strokeStyle="#d9c39a";c.lineWidth=14;c.lineCap="round";c.beginPath();SP.forEach((p,k)=>k?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1]));c.stroke();
+c.font="28px serif";c.textAlign="center";
+[["⛵",60,60],["⛵",660,370],["⛵",650,70],["🌊",90,380],["⛰️",430,70],["🌲",200,160],["🌲",470,330],["🌲",250,350],["🌾",450,200]].forEach(p=>c.fillText(p[0],p[1],p[2]));
+SP.forEach((p,k)=>{c.globalAlpha=k>i?.35:k<i?.6:1;c.font="44px serif";c.fillText(EM[k],p[0],p[1]);c.globalAlpha=1;label(c,cur.sc[k].t.split(" · ")[1]||"",p[0],p[1]+22);c.font="26px serif";if(k==i)c.fillText("⭐",p[0],p[1]-36+Math.sin(t*2)*5);if(k<i)c.fillText("✅",p[0]+24,p[1]-18)});
+let say=null;
+CH.filter(o=>o.id!=cur.id).forEach((o,k)=>{const x=NP[k][0]+Math.sin(t+k*2)*18,y=NP[k][1]+Math.cos(t*.8+k)*8;av(c,x,y,.8,o.id);label(c,o.n,x,y+44);if(Math.hypot(W.x-x,W.y-y)<60)say=[o.n,LN[o.id],x,y]});
+av(c,W.x,W.y,.8,cur.id,me.rb);label(c,me.n||cur.n,W.x,W.y+44);
+if(say){c.font="13px sans-serif";const m=Math.min(c.measureText(say[1]).width+20,340),x=Math.max(m/2+4,Math.min(716-m/2,say[2])),y=say[3]-66;c.fillStyle="#fffdf8";c.beginPath();c.roundRect(x-m/2,y-18,m,30,8);c.fill();c.fillStyle="#2a2118";c.fillText(say[0]+": "+say[1],x,y+2,m-12)}
+const p=SP[i],near=Math.hypot(W.x-p[0],W.y-p[1])<55;
+if(near!=W.near){W.near=near;document.getElementById("go").innerHTML=near?`<button class="btn" onclick="cancelAnimationFrame(raf);render()">📖 이야기 시작</button>`:""}
+raf=requestAnimationFrame(loop)}
+function bars(){return `<div class="bars">${v.map((n,k)=>`<div class="bar"><span>${ST[k]}</span><i><u style="width:${Math.max(0,Math.min(100,n))}%"></u></i><b>${n}</b></div>`).join("")}</div>`}
+function render(){
+ const s=cur.sc[i];locked=false;setTimeout(paintAll,0);
+ A.innerHTML=`<div class="top"><button class="btn ghost" onclick="home()">← 인물 선택</button><span class="sub">${cur.e} ${cur.n} · ${i+1}/${cur.sc.length}</span></div>
+ ${bars()}<div class="card"><canvas class="pt" data-id="${cur.id}" width="130" height="130" style="float:right;width:84px"></canvas><div class="tag">${s.t}</div><p>${s.x}</p>
+ ${s.o.map((o,k)=>`<button class="opt" onclick="pick(${k})">${"①②③"[k]} ${o[0]}</button>`).join("")}</div><div id="fb"></div>`;
+}
+function pick(k){
+ if(locked)return;locked=true;
+ const o=cur.sc[i].o[k];
+ v=v.map((n,j)=>Math.max(0,Math.min(100,n+o[1][j])));
+ document.querySelectorAll(".opt").forEach((b,j)=>{b.disabled=true;if(j==k)b.classList.add("pick")});
+ const last=i==cur.sc.length-1;
+ document.getElementById("fb").innerHTML=`<div class="fb"><div class="d">통찰 ${o[1][2]>=0?"+":""}${o[1][2]} · 백성 ${o[1][0]>=0?"+":""}${o[1][0]} · 나라 ${o[1][1]>=0?"+":""}${o[1][1]}</div>${o[2]}</div><button class="btn" onclick="${last?"result()":"nxt()"}">${last?"결과 보기":"다음 장면 →"}</button>`;
+}
+function nxt(){i++;world();window.scrollTo(0,0)}
+function result(){
+ setTimeout(paintAll,0);const tot=v.reduce((a,b)=>a+b,0);S.done=S.done||{};S.done[cur.id]=tot;save();
+ const t=v[2]>=75?"동아시아를 읽는 눈을 가진 인물":v[2]>=55?"흐름을 이해하기 시작한 인물":"더 넓게 볼 필요가 있는 인물";
+ A.innerHTML=`<div class="tag">결과</div><canvas class="pt" data-id="${cur.id}" width="130" height="130" style="width:140px"></canvas><h2>${cur.e} ${cur.n} — ${t}</h2>${bars()}
+ <div class="card"><b>전쟁이 남긴 것 (동아시아 3국)</b><div class="wrap"><table>${TH.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join("")}</table></div></div>
+ <div class="card"><b>생각해 보기</b><p>${cur.n}의 입장에서, 이 전쟁은 조선·명·일본 중 누구에게 가장 큰 변화를 남겼다고 생각하나요? 이유를 적어 보세요.</p><textarea id="r" oninput="sv()">${(S["r_"+cur.id]||"").replace(/</g,"&lt;")}</textarea></div>
+ <button class="btn" onclick="home()">다른 인물 체험하기</button> <button class="btn ghost" onclick="start('${cur.id}')">다시 하기</button>`;
+ window.scrollTo(0,0)
+}
+function sv(){S["r_"+cur.id]=document.getElementById("r").value;save()}
+function finale(){
+ A.innerHTML=`<div class="tag">종합 탐구</div><h2>이 전쟁을 무엇이라 불러야 할까?</h2>
+ <div class="card"><div class="wrap"><table><tr><th>조선</th><td>임진왜란 — 임진년(1592)에 왜가 일으킨 난동. ‘왜’는 일본을 낮춰 부르는 말</td></tr><tr><th>일본</th><td>분로쿠·게이초의 역 — 당시 두 천황의 연호. ‘역(役)’은 정벌의 의미</td></tr><tr><th>중국</th><td>항왜원조 전쟁 — 일본에 대항하고 조선을 도왔다는 뜻</td></tr></table></div></div>
+ <div class="card"><b>탐구 ①</b> 임진왜란을 부르는 각국의 용어에 어떤 한계가 있을까?<textarea id="a1" oninput="S.a1=this.value;save()">${S.a1||""}</textarea></div>
+ <div class="card"><b>탐구 ②</b> 동아시아 공동 역사 교과서를 쓴다면 어떤 이름을 붙일지 제안하고 그 이유를 말해 보자.<textarea id="a2" oninput="S.a2=this.value;save()">${S.a2||""}</textarea></div>
+ <button class="btn" onclick="home()">처음으로</button>`;
+}
+home();
+</script></body></html>
